@@ -1,73 +1,55 @@
-# React + TypeScript + Vite
+# SQL Toolkit
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A web app that helps you work with SQL queries using the Claude API. Available at [sql.lesterdominguez.com](https://sql.lesterdominguez.com).
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+**Explain SQL** — Paste a query and get a plain-English explanation, optimization suggestions, and a rewritten version streamed in real time.
 
-## React Compiler
+**Write SQL** — Describe what data you want in plain English (with an optional table schema) and get a ready-to-use SQL query generated for you.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Local development
 
-## Expanding the ESLint configuration
+### Prerequisites
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- Node.js 18+
+- A Vercel account with the CLI installed (`npm install -g vercel`)
+- An Anthropic API key
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+### Setup
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm install
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+Create a `.env` file:
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+ANTHROPIC_API_KEY=your-key-here
 ```
+
+### Run locally
+
+```bash
+vercel dev
+```
+
+The app will be available at `http://localhost:3000`. This runs both the frontend and the API functions locally.
+
+## Deployment
+
+```bash
+vercel --prod
+```
+
+**Required before deploying:**
+- Vercel CLI installed and authenticated (`vercel login`)
+- `ANTHROPIC_API_KEY` set in Vercel environment variables (`vercel env add ANTHROPIC_API_KEY`)
+
+## Tech stack
+
+- React + TypeScript + Vite
+- Tailwind CSS v4
+- Anthropic SDK (`claude-opus-4-6`)
+- Vercel (hosting + serverless Edge functions)
+- Server-Sent Events for streaming
